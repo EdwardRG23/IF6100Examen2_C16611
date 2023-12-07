@@ -1,0 +1,51 @@
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class OperacionAritmeticaTest {
+
+    @Test
+    public void testSuma() {
+        OperacionAritmetica context = new OperacionAritmetica(new Sumar());
+        int resultado = context.procesar(5, 10);
+        assertEquals(15, resultado);
+    }
+
+    @Test
+    public void testResta() {
+        OperacionAritmetica context = new OperacionAritmetica(new Resta());
+        int resultado = context.procesar(20, 4);
+        assertEquals(16, resultado);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testRestaInvalida() {
+        OperacionAritmetica context = new OperacionAritmetica(new Resta());
+        context.procesar(4, 20); // Debería lanzar una excepción
+    }
+
+    @Test
+    public void testMultiplicacion() {
+        OperacionAritmetica context = new OperacionAritmetica(new Multiplicacion());
+        int resultado = context.procesar(5, 4);
+        assertEquals(20, resultado);
+    }
+
+    @Test
+    public void testDivision() {
+        OperacionAritmetica context = new OperacionAritmetica(new Division());
+        int resultado = context.procesar(20, 4);
+        assertEquals(5, resultado);
+    }
+
+    @Test(expected = ArithmeticException.class)
+    public void testDivisionPorCero() {
+        OperacionAritmetica context = new OperacionAritmetica(new Division());
+        context.procesar(5, 0); // Debería lanzar una excepción
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testValoresNegativos() {
+        OperacionAritmetica context = new OperacionAritmetica(new Sumar());
+        context.procesar(-5, 10); // Debería lanzar una excepción
+    }
+}
